@@ -47,6 +47,7 @@ function initialize_state_colors_election() {
 }
 
 
+
 function initialize_state_centers() {
     for (const state in state_data) {
         let sum_x = 0;
@@ -72,7 +73,7 @@ function setup() {
     initialize_state_colors_election();
     
     let link = createA('https://theultraviolet.com/category/elections/', 'Candidate Updates');
-    link.position(width/9*8+5,height/2+50);
+    link.position(width/9*8+10,height/2+50);
     link.attribute('target', '_blank');
     link.style('font-size', '12px');
     link.style('color', '#00aeff');
