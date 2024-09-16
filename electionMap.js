@@ -71,7 +71,7 @@ function setup() {
     initialize_state_centers();
     initialize_state_colors_election();
     
-    let link = createA('https://theultraviolet.com/category/elections/', 'Political Updates');
+    let link = createA('https://theultraviolet.com/category/elections/', 'Candidate Updates');
     link.position(width/9*8+5,height/2+50);
     link.attribute('target', '_blank');
     link.style('font-size', '12px');
