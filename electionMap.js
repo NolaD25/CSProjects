@@ -1,12 +1,20 @@
+//python3 -m http.server
 let show_state_names = false;
 let show_election_colors = false;
 
 
 let state_colors = {}
 let state_centers = {}
+let clintonImg;
+let trumpImg;
 
 
 let state_colors_election = {}
+
+function preload(){
+    clintonImg = loadImage('clinton.jpg');
+    trumpImg = loadImage('trump.jpg');
+}
 
 
 function initialize_state_colors() {
@@ -62,6 +70,12 @@ function setup() {
     initialize_state_colors();
     initialize_state_centers();
     initialize_state_colors_election();
+    
+    let link = createA('https://theultraviolet.com/category/elections/', 'Political Updates');
+    link.position(width/9*8+5,height/2+50);
+    link.attribute('target', '_blank');
+    link.style('font-size', '12px');
+    link.style('color', '#00aeff');
 }
 
 
@@ -134,7 +148,7 @@ function get_color(state) {
 }
 
 function get_state_percent(state){
-    for (const state in election_data_2016) {
+    
         let demVotes = election_data_2016[state][0];
         let repVotes = election_data_2016[state][1];
         let total = demVotes + repVotes;
@@ -144,12 +158,12 @@ function get_state_percent(state){
 
 
         if (demVotes > repVotes) {
-            return clinton;
+            return clinton.toFixed(2);
         } else {
-            return trump
+            return trump.toFixed(2);
         }
 
-    }
+    
 }
 
 
@@ -169,9 +183,26 @@ function draw() {
     if (state) {
         fill(0, 0, 100);
         draw_state(state);
-        fill(0);
-        text(state, mouseX, mouseY);
-        text(get_state_percent(state),mouseX,mouseY+10) //figure out how to get the specific state
+        fill(get_color(state));
+        text(state, width/9*8, height/2);
+        let percent = get_state_percent(state);
+        
+        if(hue(get_color(state)) == 240){
+            clintonImg.resize(width/9,height/3);
+            image(clintonImg, width/9*8, height/3*2);
+            fill(240,100,100);
+            text(percent + "%", width/9*8, height/2+20);
+            fill(0,100,100);
+            text((100-percent).toFixed(2) + "%", width/9*8, height/2+30);
+        }else if(hue(get_color(state)) == 0){
+            trumpImg.resize(width/9, height/3);
+            image(trumpImg, width/9*8, height/3*2);
+            fill(0,100,100);
+            text(percent + "%", width/9*8, height/2+20);
+            fill(240,100,100);
+            text((100-percent).toFixed(2) + "%", width/9*8, height/2+30);
+        }
+        
         
     }
 
