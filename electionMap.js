@@ -3,6 +3,7 @@ let show_state_names = false;
 let show_election_colors = false;
 
 
+
 let state_colors = {}
 let state_centers = {}
 let clintonImg;
@@ -36,13 +37,13 @@ function initialize_state_colors_election() {
 
         if (clinton > trump) {
             hue = 240;
-            value = map(int(clinton/total * 100), 45, 70, 0, 100);
+            //value = map(int(clinton/total * 100), 45, 70, 0, 100);
         } else {
             hue = 0;
-            value = map(int(trump/total * 100), 45, 70, 0, 100);
+            //value = map(int(trump/total * 100), 45, 70, 0, 100);
         }
 
-        state_colors_election[state] = color(hue, value, 100); 
+        state_colors_election[state] = color(hue, 100 /*value*/, 100); 
     }
 }
 
