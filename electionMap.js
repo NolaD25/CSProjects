@@ -33,7 +33,7 @@ function initialize_state_colors_election() {
         let trump = election_data_2016[state][1];
         let total = clinton + trump;
 
-        let hue, value;
+        let hue, //value;
 
         if (clinton > trump) {
             hue = 240;
@@ -43,7 +43,7 @@ function initialize_state_colors_election() {
             //value = map(int(trump/total * 100), 45, 70, 0, 100);
         }
 
-        state_colors_election[state] = color(hue, 100 /*value*/, 100); 
+        state_colors_election[state] = color(hue, 100, 100); 
     }
 }
 
