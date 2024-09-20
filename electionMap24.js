@@ -8,13 +8,15 @@ let state_colors = {}
 let state_centers = {}
 let clintonImg;
 let trumpImg;
+let noCallImg;
 
 
 let state_colors_election = {}
 
 function preload(){
-    clintonImg = loadImage('clinton.jpg');
+    harrisImg = loadImage('harris.jpg');
     trumpImg = loadImage('trump.jpg');
+    noCallImg = loadImage('harrisvtrump.jpg');
 }
 
 
@@ -29,17 +31,17 @@ function initialize_state_colors() {
 function initialize_state_colors_election() {
 
     for (const state in election_data_2024) {
-        let clinton = election_data_2024[state][0];
+        let harris = election_data_2024[state][0];
         let trump = election_data_2024[state][1];
         let total = clinton + trump;
 
         let hue, value, saturation;
 
-        if (clinton > trump) {
+        if (harris > trump) {
             hue = 240;
             //value = map(int(clinton/total * 100), 45, 70, 0, 100);
             value = 70;
-            saturtion = 100;
+            saturation = 100;
         } else if (trump > clinton){
             hue = 0;
             //value = map(int(trump/total * 100), 45, 70, 0, 100);
@@ -202,8 +204,8 @@ function draw() {
         let call = get_state_call(state);
         
         if(hue(get_color(state)) == 240){
-            clintonImg.resize(width/9,height/3);
-            image(clintonImg, width/9*8, height/3*2);
+            harrisImg.resize(width/9,height/3);
+            image(harrisImg, width/9*8, height/3*2);
             fill(get_color(state));
             text(call, width/9*8, height/2+20);
             //fill(0,100,100);
@@ -216,7 +218,8 @@ function draw() {
             //fill(240,100,100);
             //text((100-percent).toFixed(2) + "%", width/9*8, height/2+30);
         }else{
-            
+            noCallImg.resize(width/9, height/3);
+            image(noCallImg, width/9*8, height/3*2);
             fill(get_color(state));
             text(call, width/9*8, height/2+20);
         }
