@@ -3,7 +3,7 @@ let election_data_2024 = {
     'Alaska' : [0,0],
     'Arizona' : [0,0],
     'Arkansas' : [0,0],
-    'California' : [0,0],
+    'California' : [1,0],
     'Colorado' : [0,0],
     'Connecticut' : [0,0],
     'Delaware' : [0,0],
