@@ -182,7 +182,7 @@ function get_state_call(state){
     
 }
 
-function score(state){
+function score(){
     let harrisTotal = 0;
     let trumpTotal = 0;
     
@@ -213,10 +213,22 @@ function score(state){
     
 }
 
-function draw_score(){
+function draw_score(scores){
     
+    let harrisTotal = scores[0];
+    let trumpTotal = scores[1];
     
+    let demScore = map(harrisTotal, 0, 538, 0, 900);
+    let repScore = map(trumpTotal, 0 , 538, 0, 900);
     
+    fill(50);
+    rect(0,0, width, 20);
+    fill(255);
+    rect(0,0,demScore,20);
+    fill(0);
+    rect(0,width,width-repScore,20);
+    
+    text(harrisTotal + trumpTotal, 400,400);
 }
 
 
@@ -274,7 +286,8 @@ function draw() {
     text("n: state names", x, y+=25);
     text("c: toggle election colors", x, y+=25);
     
-    score(state);
+    
+    draw_score(300,0);
 }
 
 
