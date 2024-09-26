@@ -1,4 +1,4 @@
-let election_data_2024 = {
+let electoral_college = {
     'Alabama' : [9],
     'Alaska' : [3],
     'Arizona' : [11],

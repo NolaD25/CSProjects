@@ -50,7 +50,7 @@ function initialize_state_colors_election() {
         }else{
             hue = 0;
             value = 0;
-            saturation = 50;
+            saturation = 75;
         }
 
         state_colors_election[state] = color(hue, value, saturation); 
@@ -158,7 +158,7 @@ function get_color(state) {
         return state_colors[state];
     }
 
-    return color(0, 0, 50);
+    return color(0, 0, 75);
 }
 
 function get_state_call(state){
@@ -193,7 +193,7 @@ function score(){
         
        
 
-
+        
         if (demVotes > repVotes) {
             harrisTotal+= electoral_college[state][0];
         } else if (repVotes > demVotes){
@@ -203,7 +203,7 @@ function score(){
         }
        
     }
-    return [harristTotal, trumpTotal];
+    return [harrisTotal, trumpTotal];
         //let demScore = map(harrisTotal, 0, 538, 0, 900);
         //let repScore = map(trumpTotal, 0 , 538, 0, 900);
         
@@ -221,14 +221,21 @@ function draw_score(scores){
     let demScore = map(harrisTotal, 0, 538, 0, 900);
     let repScore = map(trumpTotal, 0 , 538, 0, 900);
     
-    fill(50);
+    fill(75);
     rect(0,0, width, 20);
-    fill(255);
+    fill(240,70,100);
     rect(0,0,demScore,20);
-    fill(0);
-    rect(0,width,width-repScore,20);
+    fill(0,90,100);
     
-    text(harrisTotal + trumpTotal, 400,400);
+    rect(width-repScore,0,width,20);
+    
+    line(width/2,0,width/2,20);
+    
+    fill(255);
+    text(harrisTotal,10,15);
+    text(trumpTotal,width-25,15)
+    
+    //text(harrisTotal + trumpTotal, 400,400);
 }
 
 
@@ -236,7 +243,7 @@ function draw_score(scores){
 
 function draw() {
 
-    background(0, 0, 75);
+    background(255);
     noFill();
 
     for (let state in state_data) {
@@ -260,6 +267,8 @@ function draw() {
             image(harrisImg, width/9*8, height/3*2);
             fill(get_color(state));
             text(call, width/9*8, height/2+20);
+            text("Electoral college",width/9*8,height/2+40);
+            text("votes:" + electoral_college[state][0],width/9*8,height/2+60);
             //fill(0,100,100);
             //text((100-percent).toFixed(2) + "%", width/9*8, height/2+30);
         }else if(call === "Trump"){
@@ -267,6 +276,8 @@ function draw() {
             image(trumpImg, width/9*8, height/3*2);
             fill(get_color(state));
             text(call, width/9*8, height/2+20);
+            text("Electoral college",width/9*8,height/2+40);
+            text("votes:" + electoral_college[state][0],width/9*8,height/2+60);
             //fill(240,100,100);
             //text((100-percent).toFixed(2) + "%", width/9*8, height/2+30);
         }else{
@@ -274,6 +285,8 @@ function draw() {
             image(noCallImg, width/9*8, height/3*2);
             fill(get_color(state));
             text(call, width/9*8, height/2+20);
+            text("Electoral college",width/9*8,height/2+40);
+            text("votes:" + electoral_college[state][0],width/9*8,height/2+60);
         }
         
         
@@ -287,7 +300,7 @@ function draw() {
     text("c: toggle election colors", x, y+=25);
     
     
-    draw_score(300,0);
+    draw_score(score());
 }
 
 
