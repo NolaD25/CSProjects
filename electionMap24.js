@@ -1,12 +1,12 @@
 //python3 -m http.server
 let show_state_names = false;
-let show_election_colors = false;
+let show_election_colors = true;
 
 
 
 let state_colors = {}
 let state_centers = {}
-let clintonImg;
+let harrisImg;
 let trumpImg;
 let noCallImg;
 
@@ -33,16 +33,16 @@ function initialize_state_colors_election() {
     for (const state in election_data_2024) {
         let harris = election_data_2024[state][0];
         let trump = election_data_2024[state][1];
-        let total = clinton + trump;
+        let total = harris + trump;
 
         let hue, value, saturation;
 
         if (harris > trump) {
             hue = 240;
-            //value = map(int(clinton/total * 100), 45, 70, 0, 100);
+            //value = map(int(harris/total * 100), 45, 70, 0, 100);
             value = 70;
             saturation = 100;
-        } else if (trump > clinton){
+        } else if (trump > harris){
             hue = 0;
             //value = map(int(trump/total * 100), 45, 70, 0, 100);
             value = 90;
@@ -162,25 +162,64 @@ function get_color(state) {
 }
 
 function get_state_call(state){
-    
+
         let demVotes = election_data_2024[state][0];
         let repVotes = election_data_2024[state][1];
         let total = demVotes + repVotes;
         
-        let clinton = (demVotes/total)*100;
-        let trump = (repVotes/total)*100;
+        //let harris = (demVotes/total)*100;
+        //let trump = (repVotes/total)*100;
 
 
         if (demVotes > repVotes) {
             return "Harris";
         } else if (repVotes > demVotes){
             return "Trump";
-        }else{
+        }else if (demVotes == repVotes){
             return "Not called yet";
         }
-
+    
     
 }
+
+function score(state){
+    let harrisTotal = 0;
+    let trumpTotal = 0;
+    
+    for(const state in election_data_2024){
+        let demVotes = election_data_2024[state][0];
+        let repVotes = election_data_2024[state][1];
+        let total = demVotes + repVotes;
+        
+       
+
+
+        if (demVotes > repVotes) {
+            harrisTotal+= electoral_college[state][0];
+        } else if (repVotes > demVotes){
+            trumpTotal+= electoral_college[state][0];
+        }else if (demVotes == repVotes){
+           
+        }
+       
+    }
+    return [harristTotal, trumpTotal];
+        //let demScore = map(harrisTotal, 0, 538, 0, 900);
+        //let repScore = map(trumpTotal, 0 , 538, 0, 900);
+        
+        
+    
+    
+    
+}
+
+function draw_score(){
+    
+    
+    
+}
+
+
 
 
 function draw() {
@@ -194,6 +233,7 @@ function draw() {
         draw_state(state);
         
     }
+    
 
     let state = find_closest_state(mouseX, mouseY);
     if (state) {
@@ -203,14 +243,14 @@ function draw() {
         text(state, width/9*8, height/2);
         let call = get_state_call(state);
         
-        if(hue(get_color(state)) == 240){
+        if(call === "Harris"){
             harrisImg.resize(width/9,height/3);
             image(harrisImg, width/9*8, height/3*2);
             fill(get_color(state));
             text(call, width/9*8, height/2+20);
             //fill(0,100,100);
             //text((100-percent).toFixed(2) + "%", width/9*8, height/2+30);
-        }else if(hue(get_color(state)) == 0){
+        }else if(call === "Trump"){
             trumpImg.resize(width/9, height/3);
             image(trumpImg, width/9*8, height/3*2);
             fill(get_color(state));
@@ -232,7 +272,9 @@ function draw() {
     let y = height*.8;
     textAlign(LEFT);
     text("n: state names", x, y+=25);
-    text("c: election 2024 colors", x, y+=25);
+    text("c: toggle election colors", x, y+=25);
+    
+    score(state);
 }
 
 
