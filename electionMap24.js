@@ -38,19 +38,19 @@ function initialize_state_colors_election() {
         let hue, value, saturation;
 
         if (harris > trump) {
-            hue = 240;
+            hue = 210;
             //value = map(int(harris/total * 100), 45, 70, 0, 100);
             value = 70;
-            saturation = 100;
+            saturation = 70;
         } else if (trump > harris){
-            hue = 0;
+            hue = 7;
             //value = map(int(trump/total * 100), 45, 70, 0, 100);
-            value = 90;
-            saturation = 100;
+            value = 78;
+            saturation = 71;
         }else{
-            hue = 0;
-            value = 0;
-            saturation = 75;
+            hue = 24;
+            value = 5;
+            saturation = 92;
         }
 
         state_colors_election[state] = color(hue, value, saturation); 
@@ -158,7 +158,7 @@ function get_color(state) {
         return state_colors[state];
     }
 
-    return color(0, 0, 75);
+    return color(24, 5, 92);
 }
 
 function get_state_call(state){
@@ -221,19 +221,18 @@ function draw_score(scores){
     let demScore = map(harrisTotal, 0, 538, 0, 900);
     let repScore = map(trumpTotal, 0 , 538, 0, 900);
     
-    fill(75);
-    rect(0,0, width, 20);
-    fill(240,70,100);
-    rect(0,0,demScore,20);
-    fill(0,90,100);
+    fill(24, 5, 92);
+    rect(0,0, width, 10);
+    fill(210,70,70);
+    rect(0,0,demScore,10);
+    fill(7, 78, 71);
+    rect(width-repScore,0,width,10);
     
-    rect(width-repScore,0,width,20);
-    
-    line(width/2,0,width/2,20);
+    line(width/2,0,width/2,10);
     
     fill(255);
-    text(harrisTotal,10,15);
-    text(trumpTotal,width-25,15)
+    text(harrisTotal,10,10);
+    text(trumpTotal,width-25,10)
     
     //text(harrisTotal + trumpTotal, 400,400);
 }
@@ -247,7 +246,7 @@ function draw() {
     noFill();
 
     for (let state in state_data) {
-        stroke(0);
+        stroke(255);
         fill(get_color(state));
         draw_state(state);
         
@@ -256,7 +255,14 @@ function draw() {
 
     let state = find_closest_state(mouseX, mouseY);
     if (state) {
-        fill(0, 0, 100);
+        if(hue(get_color(state)) = 210){
+           fill(210, 45, 86); 
+        }else if(hue(get_color(state)) = 7){
+            fill(7, 51, 86);
+        }else{
+            fill(25, 4, 97);
+        }
+        
         draw_state(state);
         fill(get_color(state));
         text(state, width/9*8, height/2);
