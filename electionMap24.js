@@ -118,7 +118,7 @@ function draw_state(name) {
     }
 
     if (show_state_names) {
-        fill(0);
+        fill(255);
         let position = transform_coordinates(state_centers[name]);
         textAlign(CENTER);
         text(name, position[0], position[1]);
@@ -237,6 +237,16 @@ function draw_score(scores){
     //text(harrisTotal + trumpTotal, 400,400);
 }
 
+function mouse_box(state){
+    let ecVotes = electoral_college[state][0];
+    fill(255);
+    rect(mouseX - 100, mouseY + 10, 200, 100);
+    fill(get_color(state));
+    text(state, mouseX - 100, mouseY + 20);
+    text(ecVotes + " electoral votes", mouseX - 100, mouseY + 30);
+    
+}
+
 
 
 
@@ -255,13 +265,14 @@ function draw() {
 
     let state = find_closest_state(mouseX, mouseY);
     if (state) {
-        if(hue(get_color(state)) = 210){
-           fill(210, 45, 86); 
-        }else if(hue(get_color(state)) = 7){
-            fill(7, 51, 86);
-        }else{
-            fill(25, 4, 97);
-        }
+        //if(hue(get_color(state)) = 210){
+           fill(hue(get_color(state)), saturation(get_color(state))-30, brightness(get_color(state))); 
+        
+        //}else if(hue(get_color(state)) = 7){
+            //fill(7, 51, 86);
+        //}else{
+            //fill(25, 4, 97);
+        //}
         
         draw_state(state);
         fill(get_color(state));
@@ -307,6 +318,8 @@ function draw() {
     
     
     draw_score(score());
+    
+    mouse_box(state);
 }
 
 
