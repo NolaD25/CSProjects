@@ -10,6 +10,9 @@ let harrisImg;
 let trumpImg;
 let noCallImg;
 
+let demColor;
+let repColor;
+
 
 let state_colors_election = {}
 
@@ -90,6 +93,9 @@ function setup() {
     link.style('font-size', '12px');
     link.style('color', '#00aeff');
     */
+    
+    repColor = color(7, 78, 71);
+    demColor = color(210,70,70);
 }
 
 
@@ -207,9 +213,6 @@ function score(){
         //let demScore = map(harrisTotal, 0, 538, 0, 900);
         //let repScore = map(trumpTotal, 0 , 538, 0, 900);
         
-        
-    
-    
     
 }
 
@@ -223,9 +226,9 @@ function draw_score(scores){
     
     fill(24, 5, 92);
     rect(0,0, width, 10);
-    fill(210,70,70);
+    fill(demColor);
     rect(0,0,demScore,10);
-    fill(7, 78, 71);
+    fill(repColor);
     rect(width-repScore,0,width,10);
     
     line(width/2,0,width/2,10);
@@ -241,9 +244,21 @@ function mouse_box(state){
     let ecVotes = electoral_college[state][0];
     fill(255);
     rect(mouseX - 100, mouseY + 10, 200, 100);
-    fill(get_color(state));
+    fill(get_color(state)); 
     text(state, mouseX - 100, mouseY + 20);
+    fill(0);
     text(ecVotes + " electoral votes", mouseX - 100, mouseY + 30);
+    if(get_state_call(state) == "Harris"){
+        fill(demColor);
+        text("Kamala Harris ----- " + ecVotes, mouseX - 100, mouseY+40);
+        fill(repColor);
+        text("Donald Trump ----- " + "0", mouseX - 100, mouseY+50);
+    }else if(get_state_call(state) == "Trump"){
+        fill(repColor);
+        text("Donald Trump ----- " + ecVotes, mouseX - 100, mouseY+40);
+        fill(demColor);
+        text("Kamala Harris ----- " + "0", mouseX - 100, mouseY+50);
+    }
     
 }
 
@@ -278,7 +293,7 @@ function draw() {
         fill(get_color(state));
         text(state, width/9*8, height/2);
         let call = get_state_call(state);
-        
+        /*
         if(call === "Harris"){
             harrisImg.resize(width/9,height/3);
             image(harrisImg, width/9*8, height/3*2);
@@ -305,7 +320,7 @@ function draw() {
             text("Electoral college",width/9*8,height/2+40);
             text("votes:" + electoral_college[state][0],width/9*8,height/2+60);
         }
-        
+        */
         
     }
 
@@ -318,8 +333,9 @@ function draw() {
     
     
     draw_score(score());
-    
-    mouse_box(state);
+    if(state != ""){
+        mouse_box(state);
+    }
 }
 
 
