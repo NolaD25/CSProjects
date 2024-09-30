@@ -106,7 +106,7 @@ function transform_coordinates(p) {
     const y1 = 25;
     const y2 = 50;
     return [map(p[0], x1, x2, 0, width),
-            map(p[1], y1, y2, height, 0)]
+            map(p[1], y1, y2, height, 30)]
 }
 
 
@@ -225,39 +225,51 @@ function draw_score(scores){
     let repScore = map(trumpTotal, 0 , 538, 0, 900);
     
     fill(24, 5, 92);
-    rect(0,0, width, 10);
+    rect(0,15, width, 10);
     fill(demColor);
-    rect(0,0,demScore,10);
+    rect(0,15,demScore,10);
     fill(repColor);
-    rect(width-repScore,0,width,10);
+    rect(width-repScore,15,width,10);
     
-    line(width/2,0,width/2,10);
+    stroke(0);
+    line(width/2,15,width/2,30);
+    noStroke();
+    text("270 to win", width/2, 30);
     
-    fill(255);
-    text(harrisTotal,10,10);
-    text(trumpTotal,width-25,10)
+    textSize(20);
+    fill(demColor);
+    text(harrisTotal,5,40);
+    fill(repColor);
+    textAlign(RIGHT);
+    text(trumpTotal,width-5,40)
     
     //text(harrisTotal + trumpTotal, 400,400);
 }
 
 function mouse_box(state){
     let ecVotes = electoral_college[state][0];
+    textAlign(LEFT);
     fill(255);
+    stroke(25, 2, 84);
     rect(mouseX - 100, mouseY + 10, 200, 100);
+    noStroke();
     fill(get_color(state)); 
-    text(state, mouseX - 100, mouseY + 20);
+    textSize(20);
+    text(state, mouseX - 90, mouseY + 30);
+    textSize(14);
     fill(0);
-    text(ecVotes + " electoral votes", mouseX - 100, mouseY + 30);
+    text(ecVotes + " electoral votes", mouseX - 90, mouseY + 45);
+    textSize(18);
     if(get_state_call(state) == "Harris"){
         fill(demColor);
-        text("Kamala Harris ----- " + ecVotes, mouseX - 100, mouseY+40);
+        text("Kamala Harris ----- " + ecVotes, mouseX - 90, mouseY+65);
         fill(repColor);
-        text("Donald Trump ----- " + "0", mouseX - 100, mouseY+50);
+        text("Donald Trump ----- " + "0", mouseX - 90, mouseY+85);
     }else if(get_state_call(state) == "Trump"){
         fill(repColor);
-        text("Donald Trump ----- " + ecVotes, mouseX - 100, mouseY+40);
+        text("Donald Trump ----- " + ecVotes, mouseX - 90, mouseY+65);
         fill(demColor);
-        text("Kamala Harris ----- " + "0", mouseX - 100, mouseY+50);
+        text("Kamala Harris ----- " + "0", mouseX - 90, mouseY+85);
     }
     
 }
