@@ -105,14 +105,23 @@ function setup() {
 }
 
 
-function transform_coordinates(p) {
+function transform_coordinates(p,stateName) {
     // map latitude/longitude to rect(0, 0, width, height)
-    const x1 = -127;
-    const x2 = -66;
-    const y1 = 25;
-    const y2 = 50;
-    return [map(p[0], x1, x2, 0, width),
-            map(p[1], y1, y2, height-50, 75)]
+    if(stateName === "Alaska"){
+        const x1 = -179;
+        const x2 = -120; //work on more
+        const y1 = 50;
+        const y2 = 70;
+        return [map(p[0], x1, x2, 0, 250),
+                map(p[1], y1, y2, height+20, height-100)]
+    }else{
+        const x1 = -127;
+        const x2 = -66;
+        const y1 = 25;
+        const y2 = 50;
+        return [map(p[0], x1, x2, 0, width),
+                map(p[1], y1, y2, height-50, 75)]
+    }
 }
 
 
@@ -123,7 +132,7 @@ function draw_state(name) {
     for (let polygon of polygons) {
         beginShape();
         for (let point of polygon) {
-            q = transform_coordinates(point); 
+            q = transform_coordinates(point, name); 
             vertex(q[0], q[1]);
         }
         endShape();
@@ -347,7 +356,7 @@ function mouse_box(state){
     textAlign(LEFT);
     fill(255);
     stroke(25, 2, 84);
-    rect(mouseX - 100, mouseY + 10, 200, 100);
+    rect(mouseX - 100, mouseY + 10, 200, 80);
     noStroke();
     textSize(20);
     //if(hue(get_color(state)) > 23.9 && hue(get_color(state)) < 24.1){
@@ -359,10 +368,17 @@ function mouse_box(state){
     //}
     textSize(14);
     fill(50);
-    text(ecVotes + " electoral votes", mouseX - 90, mouseY + 45);
+    if(state == "Nebraska" || state == "Maine"){
+        text(ecVotesDem+ecVotesRep + " electoral votes", mouseX - 90, mouseY + 45);
+    }else{
+        text(ecVotes + " electoral votes" + "        E.C.V.", mouseX - 90, mouseY + 45);
+    }
     textSize(18);
-    fill(0,100,100);
-    
+    stroke(50);
+    line(mouseX-100, mouseY+50, mouseX+100, mouseY+50);
+    line(mouseX-100, mouseY+70, mouseX+100, mouseY+70);
+    line(mouseX+40,mouseY+50,mouseX+40,mouseY+90);
+    noStroke();
     if(state == "Nebraska" || state == "Maine"){
         fill(repColor);
         text("Donald Trump       " + ecVotesRep, mouseX - 90, mouseY+85);
@@ -386,7 +402,6 @@ function mouse_box(state){
             text("Kamala Harris       " + "0", mouseX - 90, mouseY+85);
         }
     }
-    line(mouseX-100, mouseY+50, mouseX+100, mouseY+50);
     
 }
 
