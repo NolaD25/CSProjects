@@ -1,25 +1,30 @@
 //python3 -m http.server
-let show_state_names = false;
+let show_state_names = true;
 let show_election_colors = true;
 
 
 
 let state_colors = {}
 let state_centers = {}
-let harrisImg;
-let trumpImg;
-let noCallImg;
+
+let fontRegular;
+let fontBold;
 
 let demColor;
 let repColor;
 
+let demCheck;
+let repCheck;
 
 let state_colors_election = {}
 
 function preload(){
-    harrisImg = loadImage('harris.jpg');
-    trumpImg = loadImage('trump.jpg');
-    noCallImg = loadImage('harrisvtrump.jpg');
+    fontRegular = loadFont('Roboto-Regular.ttf');
+    fontBold = loadFont('Roboto-Bold.ttf');
+    
+    demCheck = loadImage('demCheck.jpg');
+    repCheck = loadImage('repCheck.jpg');
+    
 }
 
 
@@ -80,11 +85,12 @@ function initialize_state_centers() {
 
 
 function setup() {
-    createCanvas(900, 500);
+    createCanvas(900, 600);
     colorMode(HSB, 360, 100, 100);
     initialize_state_colors();
     initialize_state_centers();
     initialize_state_colors_election();
+    textFont(fontRegular);
     
     /*
     let link = createA('https://theultraviolet.com/category/elections/', 'Candidate Updates');
@@ -106,7 +112,7 @@ function transform_coordinates(p) {
     const y1 = 25;
     const y2 = 50;
     return [map(p[0], x1, x2, 0, width),
-            map(p[1], y1, y2, height, 30)]
+            map(p[1], y1, y2, height-50, 75)]
 }
 
 
@@ -122,12 +128,67 @@ function draw_state(name) {
         }
         endShape();
     }
-
+    textFont(fontRegular);
     if (show_state_names) {
         fill(255);
         let position = transform_coordinates(state_centers[name]);
         textAlign(CENTER);
-        text(name, position[0], position[1]);
+        noStroke();
+        textSize(14);
+        let stateName = state_abbreviations[name][0];
+        
+        if(stateName == "Idaho"){
+            text(stateName, position[0]-10, position[1]+20);
+        }else if(stateName == "Ariz."){
+            text(stateName, position[0]+20, position[1]);
+        }else if(stateName == "Miss."){
+            text(stateName, position[0]+5, position[1]);
+        }else if(stateName == "La."){
+            text(stateName, position[0], position[1]+5);
+        }else if(stateName == "Ky."){
+            text(stateName, position[0]+20, position[1]);
+        }else if(stateName == "Fla."){
+            text(stateName, position[0]+20, position[1]);
+        }else if(stateName == "Mich."){
+            text(stateName, position[0]+20, position[1]+40);
+        }else if(stateName == "W.Va."){
+            text(stateName, position[0]-10, position[1]+15);
+        }else if(stateName == "Ark."){
+            text(stateName, position[0]-10, position[1]);
+        }else if(stateName == "Nebr."){
+            text(stateName, position[0]-10, position[1]);
+        }else if(stateName == "S.Dak"){
+            text(stateName, position[0]-10, position[1]);
+        }else if(stateName == "Oreg."){
+            text(stateName, position[0], position[1]+20);
+        }else if(stateName == "Tenn."){
+            text(stateName, position[0], position[1]+5);
+        }else if(stateName == "Md."){
+            fill(50);
+            text(stateName, position[0]+45, position[1]+20);
+        }else if(stateName == "Del."){
+            fill(50);
+            text(stateName, position[0]+30, position[1]+10);
+        }else if(stateName == "N.J."){
+            fill(50);
+            text(stateName, position[0]+25, position[1]+10);
+        }else if(stateName == "N.H."){
+            fill(50);
+            text(stateName, position[0]+30, position[1]+20);
+        }else if(stateName == "Mass."){
+            fill(50);
+            text(stateName, position[0]+30, position[1]+5);
+        }else if(stateName == "R.I."){
+            fill(50);
+            text(stateName, position[0]+30, position[1]+15);
+        }else if(stateName == "Conn."){
+            fill(50);
+            text(stateName, position[0]+20, position[1]+20);
+        }else{
+            text(stateName, position[0], position[1]);
+        }
+        
+        
     }
 }
 
@@ -176,7 +237,6 @@ function get_state_call(state){
         //let harris = (demVotes/total)*100;
         //let trump = (repVotes/total)*100;
 
-
         if (demVotes > repVotes) {
             return "Harris";
         } else if (repVotes > demVotes){
@@ -199,13 +259,17 @@ function score(){
         
        
 
-        
-        if (demVotes > repVotes) {
-            harrisTotal+= electoral_college[state][0];
-        } else if (repVotes > demVotes){
-            trumpTotal+= electoral_college[state][0];
-        }else if (demVotes == repVotes){
+        if(state == "Nebraska" || state == "Maine"){
+            harrisTotal += demVotes;
+            trumpTotal += repVotes;
+        }else{
+            if (demVotes > repVotes) {
+                harrisTotal+= electoral_college[state][0];
+            }else if (repVotes > demVotes){
+                trumpTotal+= electoral_college[state][0];
+            }else if (demVotes == repVotes){
            
+            }
         }
        
     }
@@ -217,6 +281,7 @@ function score(){
 }
 
 function draw_score(scores){
+    textFont(fontBold);
     
     let harrisTotal = scores[0];
     let trumpTotal = scores[1];
@@ -225,52 +290,103 @@ function draw_score(scores){
     let repScore = map(trumpTotal, 0 , 538, 0, 900);
     
     fill(24, 5, 92);
-    rect(0,15, width, 10);
+    rect(0,40, width, 10);
     fill(demColor);
-    rect(0,15,demScore,10);
+    rect(0,40,demScore,10);
     fill(repColor);
-    rect(width-repScore,15,width,10);
+    rect(width-repScore,40,width,10);
     
     stroke(0);
-    line(width/2,15,width/2,30);
+    line(width/2,40,width/2,50);
     noStroke();
-    text("270 to win", width/2, 30);
+    textSize(14);
+    fill(0);
+    textAlign(CENTER);
+    text("270", width/2, 65);
+    text("TO WIN", width/2, 80);
     
-    textSize(20);
+    textAlign(LEFT);
+    textSize(24);
     fill(demColor);
-    text(harrisTotal,5,40);
+    text(harrisTotal,5,20);
+    textSize(16);
+    text("Kamala Harris",5,35);
+    textSize(24);
     fill(repColor);
     textAlign(RIGHT);
-    text(trumpTotal,width-5,40)
+    text(trumpTotal,width-5,20);
+    textSize(16);
+    text("Donald Trump",width-5,35);
     
     //text(harrisTotal + trumpTotal, 400,400);
+    imageMode(CENTER);
+    if(harrisTotal >= 270){
+        textAlign(LEFT);
+        fill(demColor);
+        demCheck.resize(10,0);
+        image(demCheck, 120,30)
+    }else if(trumpTotal >= 270){
+        textAlign(RIGHT);
+        fill(repColor);
+        repCheck.resize(10,0);
+        image(repCheck, width-120,30);
+    }
 }
 
 function mouse_box(state){
-    let ecVotes = electoral_college[state][0];
+    textFont(fontRegular);
+    let ecVotes = 0;
+    let ecVotesDem = 0;
+    let ecVotesRep = 0;
+    if(state == "Nebraska" || state == "Maine"){
+        ecVotesDem = election_data_2024[state][0];
+        ecVotesRep = election_data_2024[state][1];
+    }else{
+        ecVotes = electoral_college[state][0];
+    }
     textAlign(LEFT);
     fill(255);
     stroke(25, 2, 84);
     rect(mouseX - 100, mouseY + 10, 200, 100);
     noStroke();
-    fill(get_color(state)); 
     textSize(20);
-    text(state, mouseX - 90, mouseY + 30);
+    //if(hue(get_color(state)) > 23.9 && hue(get_color(state)) < 24.1){
+        fill(0);
+        text(state, mouseX - 90, mouseY + 30);
+    //}else{
+        //fill(get_color(state));
+        //text(state, mouseX - 90, mouseY + 30);
+    //}
     textSize(14);
-    fill(0);
+    fill(50);
     text(ecVotes + " electoral votes", mouseX - 90, mouseY + 45);
     textSize(18);
-    if(get_state_call(state) == "Harris"){
-        fill(demColor);
-        text("Kamala Harris ----- " + ecVotes, mouseX - 90, mouseY+65);
+    fill(0,100,100);
+    
+    if(state == "Nebraska" || state == "Maine"){
         fill(repColor);
-        text("Donald Trump ----- " + "0", mouseX - 90, mouseY+85);
-    }else if(get_state_call(state) == "Trump"){
-        fill(repColor);
-        text("Donald Trump ----- " + ecVotes, mouseX - 90, mouseY+65);
+        text("Donald Trump       " + ecVotesRep, mouseX - 90, mouseY+85);
         fill(demColor);
-        text("Kamala Harris ----- " + "0", mouseX - 90, mouseY+85);
+        text("Kamala Harris       " + ecVotesDem, mouseX - 90, mouseY+65);
+    }else{
+    
+        if(get_state_call(state) == "Harris"){
+            fill(demColor);
+            text("Kamala Harris       " + ecVotes, mouseX - 90, mouseY+65);
+            fill(repColor);
+            text("Donald Trump       " + "0", mouseX - 90, mouseY+85);
+        }else if(get_state_call(state) == "Trump"){
+            fill(repColor);
+            text("Donald Trump       " + ecVotes, mouseX - 90, mouseY+65);
+            fill(demColor);
+            text("Kamala Harris       " + "0", mouseX - 90, mouseY+85);
+        }else{
+            fill(0);
+            text("Donald Trump       " + "0", mouseX - 90, mouseY+65);
+            text("Kamala Harris       " + "0", mouseX - 90, mouseY+85);
+        }
     }
+    line(mouseX-100, mouseY+50, mouseX+100, mouseY+50);
     
 }
 
@@ -303,7 +419,7 @@ function draw() {
         
         draw_state(state);
         fill(get_color(state));
-        text(state, width/9*8, height/2);
+        //text(state, width/9*8, height/2);
         let call = get_state_call(state);
         /*
         if(call === "Harris"){
@@ -340,8 +456,9 @@ function draw() {
     let x = 25;
     let y = height*.8;
     textAlign(LEFT);
-    text("n: state names", x, y+=25);
-    text("c: toggle election colors", x, y+=25);
+    textSize(20);
+    //text("n: state names", x, y+=25);
+    //text("c: toggle election colors", x, y+=25);
     
     
     draw_score(score());
@@ -355,9 +472,9 @@ function keyPressed() {
     if (key == 'n') {
         show_state_names = !show_state_names;
     }
-    if (key == 'c') {
+    /*if (key == 'c') {
         show_election_colors =!show_election_colors;
-    }
+    }*/
 }
 
 
