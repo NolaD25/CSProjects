@@ -81,9 +81,9 @@ function initialize_state_centers() {
         }
         
         if(state === "Hawaii"){
-            state_centers[state] = [137, 120];
+            state_centers[state] = [275, height-50];
         }else if(state === "Alaska"){
-            state_centers[state] = [78, 85];
+            state_centers[state] = [100, height-100];
         }else{
             state_centers[state] = [sum_x/count, sum_y/count];
         }
@@ -119,14 +119,14 @@ function transform_coordinates(p,stateName) {
         const x2 = -120; 
         const y1 = 50;
         const y2 = 70;
-        return [map(p[0], x1, x2, 0, 233),
+        return [map(p[0], x1, x2, 0, 240),
                 map(p[1], y1, y2, height+20, height-150)]
     }else if(stateName === "Hawaii"){
         const x1 = -165;
         const x2 = -150; 
         const y1 = 15;
         const y2 = 30;
-        return [map(p[0], x1, x2, 150, 425),
+        return [map(p[0], x1, x2, 160, 410),
                 map(p[1], y1, y2, height+20, height-220)]
     }else{
         const x1 = -127;
@@ -140,7 +140,7 @@ function transform_coordinates(p,stateName) {
 
 
 function draw_state(name) {
-
+    let position = [0,0];
     polygons = state_data[name];
 
     for (let polygon of polygons) {
@@ -154,7 +154,11 @@ function draw_state(name) {
     textFont(fontRegular);
     if (show_state_names) {
         fill(255);
-        let position = transform_coordinates(state_centers[name]);
+        if(name === "Hawaii" || name === "Alaska"){
+            position = state_centers[name];
+        }else{
+            position = transform_coordinates(state_centers[name]);
+        }
         textAlign(CENTER);
         noStroke();
         textSize(14);
@@ -187,8 +191,6 @@ function draw_state(name) {
         }else if(stateName == "Tenn."){
             text(stateName, position[0], position[1]+5);
         }else if(stateName == "Alaska"){
-            fill(0,100,100);
-            text(position[0] + "," + position[1],500,600);
             text(stateName, position[0], position[1]);
         }else if(stateName == "Md."){
             fill(50);
@@ -212,8 +214,7 @@ function draw_state(name) {
             fill(50);
             text(stateName, position[0]+20, position[1]+20);
         }else if(stateName == "Hawaii"){
-            fill(0,100,100);
-            text(position[0] + "," + position[1],500,580);
+            fill(50);
             text(stateName, position[0], position[1]);
         }else{
             text(stateName, position[0], position[1]);
@@ -228,10 +229,15 @@ function find_closest_state(x, y) {
 
     result = "";
     min_distance = 100;
+    let q = [0,0];
 
     for (const state in state_centers) {
         position = state_centers[state];
-        let q = transform_coordinates(position);
+        if(state === "Hawaii" || state === "Alaska"){
+            q = position;
+        }else{
+            q = transform_coordinates(position);
+        }
         let d = dist(q[0], q[1], x, y);
         if (d < min_distance) {
             min_distance = d;
