@@ -79,7 +79,14 @@ function initialize_state_centers() {
                 count++;
             }
         }
-        state_centers[state] = [sum_x/count, sum_y/count];
+        
+        if(state === "Hawaii"){
+            state_centers[state] = [137, 120];
+        }else if(state === "Alaska"){
+            state_centers[state] = [78, 85];
+        }else{
+            state_centers[state] = [sum_x/count, sum_y/count];
+        }
     }
 }
 
@@ -109,11 +116,18 @@ function transform_coordinates(p,stateName) {
     // map latitude/longitude to rect(0, 0, width, height)
     if(stateName === "Alaska"){
         const x1 = -179;
-        const x2 = -120; //work on more
+        const x2 = -120; 
         const y1 = 50;
         const y2 = 70;
-        return [map(p[0], x1, x2, 0, 250),
-                map(p[1], y1, y2, height+20, height-100)]
+        return [map(p[0], x1, x2, 0, 233),
+                map(p[1], y1, y2, height+20, height-150)]
+    }else if(stateName === "Hawaii"){
+        const x1 = -165;
+        const x2 = -150; 
+        const y1 = 15;
+        const y2 = 30;
+        return [map(p[0], x1, x2, 150, 425),
+                map(p[1], y1, y2, height+20, height-220)]
     }else{
         const x1 = -127;
         const x2 = -66;
@@ -172,6 +186,10 @@ function draw_state(name) {
             text(stateName, position[0], position[1]+20);
         }else if(stateName == "Tenn."){
             text(stateName, position[0], position[1]+5);
+        }else if(stateName == "Alaska"){
+            fill(0,100,100);
+            text(position[0] + "," + position[1],500,600);
+            text(stateName, position[0], position[1]);
         }else if(stateName == "Md."){
             fill(50);
             text(stateName, position[0]+45, position[1]+20);
@@ -193,6 +211,10 @@ function draw_state(name) {
         }else if(stateName == "Conn."){
             fill(50);
             text(stateName, position[0]+20, position[1]+20);
+        }else if(stateName == "Hawaii"){
+            fill(0,100,100);
+            text(position[0] + "," + position[1],500,580);
+            text(stateName, position[0], position[1]);
         }else{
             text(stateName, position[0], position[1]);
         }
@@ -492,7 +514,7 @@ function keyPressed() {
     }*/
 }
 
-
+/*
 function mousePressed() {
     // temporary hack for mobile
 
@@ -506,4 +528,4 @@ function mousePressed() {
 
     if (x<mouseX && mouseX<x+150 && y<mouseY && mouseY<y+25)
         show_election_colors =!show_election_colors;
-}
+}*/
