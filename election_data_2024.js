@@ -1,5 +1,5 @@
 let election_data_2024 = {
-    'Alabama' : [0,0],
+    'Alabama' : [1,0],
     'Alaska' : [0,0],
     'Arizona' : [0,0],
     'Arkansas' : [0,0],
