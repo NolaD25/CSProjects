@@ -44,22 +44,28 @@ function initialize_state_colors_election() {
         let total = harris + trump;
 
         let hue, value, saturation;
-
-        if (harris > trump) {
-            hue = 210;
-            //value = map(int(harris/total * 100), 45, 70, 0, 100);
-            value = 70;
-            saturation = 70;
-        } else if (trump > harris){
+        if(state === "Maine" && harris == trump && trump > 0){
             hue = 7;
-            //value = map(int(trump/total * 100), 45, 70, 0, 100);
             value = 78;
             saturation = 71;
         }else{
-            hue = 24;
-            value = 5;
-            saturation = 92;
+            if (harris > trump) {
+                hue = 210;
+                //value = map(int(harris/total * 100), 45, 70, 0, 100);
+                value = 70;
+                saturation = 70;
+            }else if (trump > harris){
+                hue = 7;
+                //value = map(int(trump/total * 100), 45, 70, 0, 100);
+                value = 78;
+                saturation = 71;
+            }else{
+                hue = 24;
+                value = 5;
+                saturation = 92;
+            }
         }
+        
 
         state_colors_election[state] = color(hue, value, saturation); 
     }
@@ -432,7 +438,64 @@ function mouse_box(state){
     }
     
 }
-
+function draw_MaineAndNebraska(state){
+    let demMaine = election_data_2024["Maine"][0];
+    let repMaine = election_data_2024["Maine"][1];
+    let demNebraska = election_data_2024["Nebraska"][0];
+    let repNebraska = election_data_2024["Nebraska"][1];
+    
+    let maineColor = color(24, 5, 92);
+    let nebraskaColor = color(24, 5, 92);
+    
+    
+    if(demNebraska == 5){
+        nebraskaColor = demColor;
+    }else if(repNebraska == 5){
+        nebraskaColor = repColor;
+    }else{
+        if(demNebraska < repNebraska){
+            nebraskaColor = demColor;
+        }else if(repNebraska < demNebraska){
+            nebraskaColor = repColor;
+        }else{
+            nebraskaColor = color(24, 5, 92);
+        }
+    }
+    
+    if(state === "Nebraska"){
+        fill(hue(nebraskaColor), saturation(nebraskaColor)-30, brightness(nebraskaColor));
+    }else{
+        fill(nebraskaColor);
+    }
+    
+    stroke(255);
+    rect(400,240,20,20);
+    
+    if(demMaine == 4){
+        maineColor = demColor;
+    }else if(repMaine == 4){
+        maineColor = repColor;
+    }else{
+        if(demMaine < repMaine){
+            maineColor = demColor;
+        }else if(repMaine < demMaine){
+            maineColor = repColor;
+        }else if(repMaine == demMaine && repMaine > 0){
+            maineColor = demColor;
+        }else{
+            maineColor = color(24, 5, 92);
+        }
+    }
+    
+    if(state === "Maine"){
+        fill(hue(maineColor), saturation(maineColor)-30, brightness(maineColor));
+    }else{
+        fill(maineColor);
+    }
+    
+    rect(845,140,20,20);
+    noStroke();
+}
 
 
 
@@ -503,11 +566,12 @@ function draw() {
     //text("n: state names", x, y+=25);
     //text("c: toggle election colors", x, y+=25);
     
-    
+    draw_MaineAndNebraska(state);
     draw_score(score());
     if(state != ""){
         mouse_box(state);
     }
+    
 }
 
 
