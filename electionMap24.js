@@ -1,4 +1,5 @@
 //python3 -m http.server
+//https://nolad25.github.io/CSProjects/
 let show_state_names = true;
 let show_election_colors = true;
 
