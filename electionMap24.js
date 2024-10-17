@@ -404,13 +404,13 @@ function mouse_box(state){
     textSize(14);
     fill(50);
     if(state == "Nebraska" || state == "Maine"){
-        text(ecVotesDem+ecVotesRep + " electoral votes", mouseX - 90, mouseY + 45);
+        text(ecVotesDem+ecVotesRep + " electoral votes(EV)", mouseX - 90, mouseY + 45);
         textSize(10);
-        text("electoral votes:", mouseX + 30, mouseY + 45);
+        text("EV:", mouseX + 50, mouseY + 45);
     }else{
-        text(ecVotes + " electoral votes", mouseX - 90, mouseY + 45);
+        text(ecVotes + " electoral votes(EV)", mouseX - 90, mouseY + 45);
         textSize(10);
-        text("electoral votes:", mouseX + 30, mouseY + 45);
+        text("EV:", mouseX + 50, mouseY + 45);
     }
     textSize(18);
     stroke(50);
