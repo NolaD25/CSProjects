@@ -1,5 +1,5 @@
 let election_data_2024 = { //maine and nebraska = EVs; everything else = call
-    'Alabama' : [0,0],
+    'Alabama' : [0,1],
     'Alaska' : [0,0],
     'Arizona' : [0,0],
     'Arkansas' : [0,0],
