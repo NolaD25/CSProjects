@@ -19,8 +19,8 @@ let repCheck;
 
 let state_colors_election = {}
 
-let w = 800;
-let h = 500;
+let w = 900;
+let h = 600;
 
 function preload(){
     fontRegular = loadFont('Roboto-Regular.ttf');
@@ -481,7 +481,7 @@ function draw_MaineAndNebraska(state){
     }
     
     stroke(255);
-    rect(400,240,20,20);
+    rect(width/20*9,height/40*16.25,height/30,height/30);
     
     if(demMaine == 4){
         maineColor = demColor;
@@ -505,7 +505,7 @@ function draw_MaineAndNebraska(state){
         fill(maineColor);
     }
     
-    rect(845,140,20,20);
+    rect(width/40*37.5,height/30*7,height/30,height/30);
     noStroke();
 }
 
