@@ -99,7 +99,7 @@ function initialize_state_centers() {
 
 
 function setup() {
-    createCanvas(800, 600);
+    createCanvas(900, 600);
     colorMode(HSB, 360, 100, 100);
     initialize_state_colors();
     initialize_state_centers();
