@@ -19,6 +19,9 @@ let repCheck;
 
 let state_colors_election = {}
 
+let w = 800;
+let h = 500;
+
 function preload(){
     fontRegular = loadFont('Roboto-Regular.ttf');
     fontBold = loadFont('Roboto-Bold.ttf');
@@ -99,7 +102,7 @@ function initialize_state_centers() {
 
 
 function setup() {
-    createCanvas(900, 600);
+    createCanvas(w, h);
     colorMode(HSB, 360, 100, 100);
     initialize_state_colors();
     initialize_state_centers();
