@@ -31,7 +31,7 @@ let election_data_2024 = { //maine and nebraska = EVs; everything else = call
     'New Hampshire' : [0,0],
     'New Jersey' : [1,0],
     'New Mexico' : [0,0],
-    'New York' : [0,0],
+    'New York' : [1,0],
     'North Carolina' : [0,0],
     'North Dakota' : [0,0],
     'Ohio' : [0,0],
