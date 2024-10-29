@@ -572,6 +572,7 @@ function draw() {
     fill(50);
     textFont(fontRegular);
     text("Results are as reported by The Associated Press at APNews.com.", width/2,height-20);
+    //text("", width/2,height-20);
 
     fill(0, 0, 0);
     let x = 25;
