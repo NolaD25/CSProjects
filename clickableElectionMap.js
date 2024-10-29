@@ -1,5 +1,4 @@
-//python3 -m http.server
-//https://nolad25.github.io/CSProjects/
+
 let show_state_names = true;
 let show_election_colors = true;
 
@@ -19,6 +18,8 @@ let repCheck;
 
 let state_colors_election = {}
 
+let clicksPerState;
+
 function preload(){
     fontRegular = loadFont('Roboto-Regular.ttf');
     fontBold = loadFont('Roboto-Bold.ttf');
@@ -37,7 +38,7 @@ function initialize_state_colors() {
 }
 
 
-function initialize_state_colors_election() {
+/*function initialize_state_colors_election() {
 
     for (const state in election_data_2024) {
         let harris = election_data_2024[state][0];
@@ -70,7 +71,7 @@ function initialize_state_colors_election() {
 
         state_colors_election[state] = color(hue, value, saturation); 
     }
-}
+}*/
 
 
 
@@ -103,7 +104,7 @@ function setup() {
     colorMode(HSB, 360, 100, 100);
     initialize_state_colors();
     initialize_state_centers();
-    initialize_state_colors_election();
+    //initialize_state_colors_election();
     textFont(fontRegular);
     
     /*
@@ -116,6 +117,7 @@ function setup() {
     
     repColor = color(7, 78, 71);
     demColor = color(210,70,70);
+    clicksPerState = 0;
 }
 
 
@@ -403,12 +405,8 @@ function mouse_box(state){
     //}
     textSize(14);
     fill(50);
-    if(state == "Nebraska"){
-        text("5 electoral votes (EV)", mouseX - 90, mouseY + 45);
-        textSize(10);
-        text("EV:", mouseX + 50, mouseY + 45);
-    }else if(state == "Maine"){
-        text("4 electoral votes (EV)", mouseX - 90, mouseY + 45);
+    if(state == "Nebraska" || state == "Maine"){
+        text(ecVotesDem+ecVotesRep + " electoral votes (EV)", mouseX - 90, mouseY + 45);
         textSize(10);
         text("EV:", mouseX + 50, mouseY + 45);
     }else{
@@ -564,7 +562,21 @@ function draw() {
             text("votes:" + electoral_college[state][0],width/9*8,height/2+60);
         }
         */
-        
+        let hue, value, saturation;
+        if(clicksPerState == 0){
+            hue = 24;
+            value = 5;
+            saturation = 92;
+        }else if(clicksPerState == 1){
+            hue = 210;
+            value = 70;
+            saturation = 70;
+        }else(clicksPerState){
+            hue = 7;
+            value = 78;
+            saturation = 71;
+        }
+        state_colors_election[state] = color(hue, value, saturation);
     }
     
     textAlign(CENTER);
@@ -587,8 +599,15 @@ function draw() {
         mouse_box(state);
     }
     
+    if(clicksPerState > 2){
+        clicksPerState = 0;
+    }
+}
+function mouseClicked() {
+    clicksPerState ++;
     
 }
+
 
 
 function keyPressed() {
