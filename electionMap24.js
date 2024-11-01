@@ -19,8 +19,8 @@ let repCheck;
 
 let state_colors_election = {}
 
-let w = 900;
-let h = 600;
+let w = 800;
+let h = 550;
 
 function preload(){
     fontRegular = loadFont('Roboto-Regular.ttf');
