@@ -491,11 +491,11 @@ function draw_MaineAndNebraska(state){
         maineColor = demColor;
     }else if(repMaine == 4){
         maineColor = repColor;
-    }else if (demMaine == 0){
-        maineColor == 0;
+    }/*else if (demMaine == 0){
+        //maineColor == 0;
     }else if(repMiane == 0){
         maineColor == 0;
-    }else{
+    }*/else{
         if(demMaine < repMaine){
             maineColor = demColor;
         }else if(repMaine < demMaine){
