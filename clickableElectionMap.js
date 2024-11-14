@@ -298,8 +298,8 @@ function score(){
     let harrisTotal = 0;
     let trumpTotal = 0;
     
-    for(const state in election_data_2024){
-        let demVotes = election_data_2024[state][0];
+    for(const state in state_colors_election){
+        /*let demVotes = election_data_2024[state][0];
         let repVotes = election_data_2024[state][1];
         let total = demVotes + repVotes;
         
@@ -316,6 +316,13 @@ function score(){
             }else if (demVotes == repVotes){
            
             }
+        }*/
+        if(hue(state_colors_election[state]) == 210){
+            harrisTotal += electoral_college[state][0];
+        }else if(hue(state_colors_election[state]) == 7){
+            trumpTotal += electoral_college[state][1];
+        }else{
+            
         }
        
     }
@@ -323,6 +330,8 @@ function score(){
         //let demScore = map(harrisTotal, 0, 538, 0, 900);
         //let repScore = map(trumpTotal, 0 , 538, 0, 900);
         
+    
+    
     
 }
 
@@ -522,7 +531,7 @@ function draw() {
     let state = find_closest_state(mouseX, mouseY);
     if (state) {
         //if(hue(get_color(state)) = 210){
-           fill(hue(get_color(state)), saturation(get_color(state))-30, brightness(get_color(state))); 
+           //fill(hue(get_color(state)), saturation(get_color(state))-30, brightness(get_color(state))); 
         
         //}else if(hue(get_color(state)) = 7){
             //fill(7, 51, 86);
@@ -562,21 +571,21 @@ function draw() {
             text("votes:" + electoral_college[state][0],width/9*8,height/2+60);
         }
         */
-        let hue, value, saturation;
+        let hueC, valueC, saturationC;
         if(clicksPerState == 0){
-            hue = 24;
-            value = 5;
-            saturation = 92;
+            hueC = 24;
+            valueC = 5;
+            saturationC = 92;
         }else if(clicksPerState == 1){
-            hue = 210;
-            value = 70;
-            saturation = 70;
-        }else(clicksPerState){
-            hue = 7;
-            value = 78;
-            saturation = 71;
+            hueC = 210;
+            valueC = 70;
+            saturationC = 70;
+        }else{
+            hueC = 7;
+            valueC = 78;
+            saturationC = 71;
         }
-        state_colors_election[state] = color(hue, value, saturation);
+        state_colors_election[state] = color(hueC, valueC, saturationC);
     }
     
     textAlign(CENTER);
