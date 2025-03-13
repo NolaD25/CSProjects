@@ -17,6 +17,10 @@ with open(filename) as f:
         #print(line)
 
         tokens = line.split(',')
+        
+        #if tokens[1].strip() == "UNNAMED":
+            #count += 1
+            #continue
 
         
         if len(tokens) == 4:
@@ -25,6 +29,9 @@ with open(filename) as f:
 
             storm_name = tokens[1].strip()
             print("\t" + "'name':", "'" + storm_name + "'" + ",")
+            
+            ints = tokens[2].strip()
+            print("\t 'nums':", "'" + ints + "',")
             
             token_count = int(tokens[2])
             print("\t 'coords': [", end=' ')
@@ -66,7 +73,7 @@ with open(filename) as f:
 
 
         count += 1
-        if count > 10:
+        if count > 30:
             break
     print("]")
         
