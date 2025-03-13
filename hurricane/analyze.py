@@ -17,27 +17,30 @@ with open(filename) as f:
         #print(line)
 
         tokens = line.split(',')
-        
-        if tokens[1].strip() == "UNNAMED":
-            count += 1
-            continue
 
         
         if len(tokens) == 4:
-            i_d = tokens[0].strip()
-            print("\t{'i_d':'" + i_d + "',")
 
+            # parse the whole line first
+            i_d = tokens[0].strip()
             storm_name = tokens[1].strip()
-            print("\t" + "'name':", "'" + storm_name + "'" + ",")
-            
             ints = tokens[2].strip()
-            print("\t 'nums':", "'" + ints + "',")
-            
             token_count = int(tokens[2])
-            print("\t 'coords': [", end=' ')
+
+            # only print stuff for named storms
+            if storm_name != "UNNAMED":
+                print("\t{'i_d':'" + i_d + "',")
+                print("\t" + "'name':", "'" + storm_name + "'" + ",")
+                print("\t 'nums':", "'" + ints + "',")
+                print("\t 'coords': [", end=' ')
+
             for i in range(token_count):
                 data_line = f.readline()
                 data_line = data_line.strip()
+
+                # we need to read the line, but don't do anything else
+                if storm_name == "UNNAMED":
+                    continue
                 
                 tokens2 = data_line.split(',')
                 x_coords = tokens2[4]
@@ -67,9 +70,11 @@ with open(filename) as f:
                     y_num = -abs(y_num)
                 
                 print("[" , x_num , "," , y_num , "],", end=' ')
-            print("]")
-            print("\t},")
 
+
+            if storm_name != "UNNAMED":
+                print("]")
+                print("\t},")
 
 
         count += 1
