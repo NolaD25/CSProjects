@@ -18,9 +18,9 @@ with open(filename) as f:
 
         tokens = line.split(',')
         
-        #if tokens[1].strip() == "UNNAMED":
-            #count += 1
-            #continue
+        if tokens[1].strip() == "UNNAMED":
+            count += 1
+            continue
 
         
         if len(tokens) == 4:
