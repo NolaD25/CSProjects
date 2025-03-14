@@ -78,7 +78,7 @@ with open(filename) as f:
 
 
         count += 1
-        if count > 30:
+        if count > 150:
             break
     print("]")
         

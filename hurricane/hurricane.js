@@ -28,10 +28,11 @@ function draw(){
             text(storm_data[i].name,200,100);
             text(storm_data[i].coords.length,200,200);
             text(storm_data[i].nums,200,300);
-            stroke(i*10,75,100,);
+            stroke(i*5,75,100,);
             x = map(storm_data[i].coords[j][0],10,30,0,1000);
             y = map(storm_data[i].coords[j][1]*-1,90,200,0,1000);
             //rect(x, y,10,10);
+            
             line(last_x, last_y, x, y);
             last_x = x;
             last_y = y;
