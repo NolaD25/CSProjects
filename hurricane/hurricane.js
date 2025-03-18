@@ -41,7 +41,7 @@ function draw(){
         i++;
         t = 0;
     }
-    if(i > storm_data[storm_index].nums){
+    if(i >= storm_data[storm_index].nums){
         i = 0;
     }
     if(count >= storm_data.length){
@@ -67,6 +67,9 @@ function draw(){
 function keyPressed(){
     if(keyCode === RIGHT_ARROW){
         storm_index ++;
+        if(storm_index > storm_data.length){
+            storm_index = storm_data.length-1;
+        }
         count ++;
 
     }
