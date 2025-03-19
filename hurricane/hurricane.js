@@ -8,7 +8,7 @@ function setup(){
     i = 0;
     t = 0;
     storm_index = 0;
-
+    rectMode(CENTER);
 }
 function draw_rect(j){
 
@@ -34,27 +34,39 @@ function draw(){
     
     
     
+    
     draw_rect(storm_index);
+    stroke(255);
+    text(storm_data.length-1, 200, 100);
+    text(storm_data.length, 200, 200);
+    text(storm_index, 200, 300);
+    
    
     t += 0.05;
     if(t > 1){
         i++;
         t = 0;
+        if(i > storm_data[storm_index].nums-2){
+            i = 0;
+        }
     }
-    if(i >= storm_data[storm_index].nums){
-        i = 0;
-    }
+    
     if(count >= storm_data.length){
         count = storm_data.length-1;
     }
+    
     //text(storm_data[0].coords[0],200,200);
     
-    for(let i = count; i < count + ceiling; i++){
-        for(let j = 0; j < storm_data[i].nums-1; j++){
-            stroke(i*5,75,100,);
-            x = map(storm_data[i].coords[j][0],10,30,0,1000);
-            y = map(storm_data[i].coords[j][1]*-1,90,200,0,1000);
-            rect(x, y,10,10);
+    for(let j = count; j < count + ceiling; j++){
+        last_x = map(storm_data[j].coords[0][0],10,30,0,1000);
+        last_y = map(storm_data[j].coords[0][1]*-1,90,200,0,1000);
+        for(let k = 0; k < storm_data[j].nums-1; k++){
+            stroke(j*5,75,100,);
+            x = map(storm_data[j].coords[k][0],10,30,0,1000);
+            y = map(storm_data[j].coords[k][1]*-1,90,200,0,1000);
+            line(last_x, last_y, x, y);
+            last_x = x;
+            last_y = y;
             
         }
 
@@ -67,15 +79,22 @@ function draw(){
 function keyPressed(){
     if(keyCode === RIGHT_ARROW){
         storm_index ++;
-        if(storm_index > storm_data.length){
+        if(storm_index >= storm_data.length){
             storm_index = storm_data.length-1;
         }
         count ++;
+        i = 0;
+        t = 0;
 
     }
     if(keyCode === LEFT_ARROW){
         storm_index --;
+        if(storm_index <= -1){
+            storm_index = 0;
+        }
         count --;
+        i = 0;
+        t = 0;
         
     }
     if(keyCode === UP_ARROW){
