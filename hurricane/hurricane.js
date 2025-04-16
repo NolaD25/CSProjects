@@ -1,7 +1,9 @@
+let storm;
 
 function setup(){
     createCanvas(1000,1000);
     colorMode(HSB);
+    rectMode(CENTER);
     count = 0;
     ceiling = 1;
     inter = 0;
@@ -20,9 +22,9 @@ function draw_rect(j){
     
     x = map(t,0,1,x1,x2);
     y = map(t,0,1,y1,y2);
-        
-    
-    rect(x,y,10,10);
+    storm = new Storm(x,y);
+
+    storm.display();
     
 }
 
@@ -53,6 +55,9 @@ function draw(){
     
     if(count >= storm_data.length){
         count = storm_data.length-1;
+    }
+    if(count < 0){
+        count = 0;
     }
     
     //text(storm_data[0].coords[0],200,200);
