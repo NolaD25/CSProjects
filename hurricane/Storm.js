@@ -17,7 +17,7 @@ class Storm{
     drawRect(x, y){
         applyMatrix();
         rotate(frameCount/20);
-        rect(this.x,this.y,5,5);
+        rect(x,y,5,5);
         resetMatrix();
     }
     getPointsX(numPoints, radius, centerX = 10) {

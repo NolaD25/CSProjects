@@ -13,8 +13,13 @@ function setup(){
     rectMode(CENTER);
 }
 function draw_rect(j){
-
-    
+    if (
+        storm_data[j] &&
+        storm_data[j].coords &&
+        storm_data[j].coords[i] &&
+        storm_data[j].coords[i+1]
+    ) {
+            
     x1 = map(storm_data[j].coords[i][0],10,30,0,1000);
     y1 = map(storm_data[j].coords[i][1]*-1,90,200,0,1000);
     x2 = map(storm_data[j].coords[i+1][0],10,30,0,1000);
@@ -22,9 +27,13 @@ function draw_rect(j){
     
     x = map(t,0,1,x1,x2);
     y = map(t,0,1,y1,y2);
-    storm = new Storm(x,y);
+    rect(x,y,10,10);
+    //storm = new Storm(x,y);
 
-    storm.display();
+    //storm.display();
+    }
+
+
     
 }
 
@@ -42,13 +51,15 @@ function draw(){
     text(storm_data.length-1, 200, 100);
     text(storm_data.length, 200, 200);
     text(storm_index, 200, 300);
+    text((parseInt(storm_data[storm_index].nums)-2), 200,400);
     
    
     t += 0.05;
     if(t > 1){
         i++;
         t = 0;
-        if(i > storm_data[storm_index].nums-2){
+        if(i > (parseInt(storm_data[storm_index].nums)-2)){
+            //console.log("working" + t + "," + i + "," + (parseInt(storm_data[storm_index].nums)-2));
             i = 0;
         }
     }
