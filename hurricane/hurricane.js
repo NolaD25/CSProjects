@@ -1,7 +1,8 @@
-let storm;
+let storms;
 
 function setup(){
     createCanvas(1000,1000);
+    storms = [];
     colorMode(HSB);
     rectMode(CENTER);
     count = 0;
@@ -11,8 +12,10 @@ function setup(){
     t = 0;
     storm_index = 0;
     rectMode(CENTER);
+    initialize_storms();
 }
-function draw_rect(j){
+
+function create_storm(j){
     if (
         storm_data[j] &&
         storm_data[j].coords &&
@@ -20,34 +23,31 @@ function draw_rect(j){
         storm_data[j].coords[i+1]
     ) {
             
-    x1 = map(storm_data[j].coords[i][0],10,30,0,1000);
-    y1 = map(storm_data[j].coords[i][1]*-1,90,200,0,1000);
-    x2 = map(storm_data[j].coords[i+1][0],10,30,0,1000);
-    y2 = map(storm_data[j].coords[i+1][1]*-1,90,200,0,1000);
-    
-    x = map(t,0,1,x1,x2);
-    y = map(t,0,1,y1,y2);
-    rect(x,y,10,10);
-    //storm = new Storm(x,y);
-
-    //storm.display();
+        x1 = map(storm_data[j].coords[i][0],10,30,0,1000);
+        y1 = map(storm_data[j].coords[i][1]*-1,90,200,0,1000);
+        x2 = map(storm_data[j].coords[i+1][0],10,30,0,1000);
+        y2 = map(storm_data[j].coords[i+1][1]*-1,90,200,0,1000);
+        x = map(t,0,1,x1,x2);
+        y = map(t,0,1,y1,y2);
+        
+        storms.push(new Storm(x,y));  
+    } 
+}
+function initialize_storms(){
+    for(let i = 0; i < storm_data.length; i++){
+        create_storm(i);
     }
-
-
-    
 }
 
 
 
+
 function draw(){
-    background(0,100,0);
-    noStroke();
-    
-    
-    
-    
-    draw_rect(storm_index);
+    background(0,100,0,0.1);
     stroke(255);
+    
+    storms[storm_index].display();
+        
     text(storm_data.length-1, 200, 100);
     text(storm_data.length, 200, 200);
     text(storm_index, 200, 300);
@@ -86,11 +86,7 @@ function draw(){
             
         }
 
-    }
-        
-    
-    
-    
+    }   
 }
 function keyPressed(){
     if(keyCode === RIGHT_ARROW){
@@ -122,5 +118,4 @@ function keyPressed(){
     if(keyCode === DOWN_ARROW){
 
     }
-    
 }
